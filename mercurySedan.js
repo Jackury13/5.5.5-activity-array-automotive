@@ -1,35 +1,81 @@
-//this includes the vehicle class as a module
-const VehicleModule = require("./vehicleBaseClass")
+// This includes the vehicle class as a module
+const VehicleModule = require('./vehicleBaseClass.js');
 
-//this shows how to call from this module...
+// This shows how to call from this module...
 let v = new VehicleModule.Vehicle("Mercury", "Sedan", "1965", "color", "mileage");
-console.log(v.make)
+console.log(v.make);
 
+// Car class extends Vehicle class correctly
+class Car extends VehicleModule.Vehicle {
+    constructor(make, model, year, color, mileage) {
+        super(make, model, year, color, mileage);
+        this.maxPassengers = 5;
+        this.passenger = 0;
+        this.numberOfWheels = 4;
+        this.maxSpeed = 160;
+        this.fuel = 10;
+        this.scheduleService = false;
+    }
 
-//After you write the derived Car class, you should test it out.
+    checkService() {
+        if (this.mileage > 30000) {
+            this.scheduleService = true;
+            console.log("Service required.");
+            return this.scheduleService;
+        } else {
+            console.log("No service needed yet.");
+        }
+    }
 
-//Note: You can code your derived Car class here or make a file named index.js and do it there.
+    start() {
+        if (this.fuel > 0) {
+            console.log("Engine has started.");
+            return this.started = true;
+        } else {
+            console.log("No fuel.");
+            return this.started = false;
+        }
+    }
 
+    stop() {
+        this.started = false;
+        console.log("Engine has stopped.");
+    }
 
-//TO DO: Code the Car subclass here or in index.js file, i.e. class Car extends Vehicle ...
+    loadPassenger(num) {
+        if (this.passenger < this.maxPassengers) {
+            if ((num + this.passenger) <= this.maxPassengers) {
+                this.passenger += num;
+                console.log(`Passengers loaded: ${this.passenger}`);
+                return this.passenger;
+            } else {
+                console.log(this.model + " " + this.make + " does not have enough space for all passengers.");
+            }
+        } else {
+            console.log(this.model + " " + this.make + " is full.");
+        }
+    }
+}
 
+// Creating instances and testing them
+let myCar = new Car("Mercury", "Rad Sedan", "2002", "White", 50000);
+myCar.start();
+myCar.loadPassenger(5);
+myCar.stop();
+myCar.checkService();
 
+console.log(myCar);
 
+// Create at least two more instances of the Car class
+let car2 = new Car("Toyota", "Camry", "2015", "Blue", 25000);
+let car3 = new Car("Ford", "Mustang", "2018", "Red", 15000);
 
+car2.start();
+car2.loadPassenger(3);
+car2.checkService();
+console.log(car2);
 
-
-
-
-
-
-
-
-//TO DO: Creating Instances and Testing Them
-
-//You can use the same instance "v" of the Vehicle class above for the base class.
-
-
-
-
-
-//Create at least two new instances of the Car class and test them here:
+car3.start();
+car3.loadPassenger(2);
+car3.checkService();
+console.log(car3);
